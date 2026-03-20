@@ -17,7 +17,7 @@ data/chroma_db/
 data/metrics.db
 data/raw/
 
-# Docs excluded from repo
+# Docs excluded from repo (keep developer guide local only)
 ARCHITECTURE.md
 DEVELOPER_GUIDE.md
 
