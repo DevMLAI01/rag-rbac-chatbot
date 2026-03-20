@@ -1,4 +1,3 @@
-# Fly.io config for the FastAPI API
 app = "rag-rbac-api"
 primary_region = "ord"
 
@@ -10,12 +9,6 @@ primary_region = "ord"
   CHROMA_PERSIST_DIR = "/app/data/chroma_db"
   METRICS_DB_PATH = "/app/data/metrics.db"
   API_PORT = "8000"
-
-# Runs once before each deploy on a temporary machine — generates + ingests data
-# only if Chroma is empty (idempotent)
-[deploy]
-  release_command = "sh scripts/release.sh"
-  wait_timeout = "5m"
 
 [http_service]
   internal_port = 8000
@@ -31,8 +24,8 @@ primary_region = "ord"
 
 [checks]
   [checks.alive]
-    grace_period = "30s"
-    interval = "15s"
+    grace_period = "15m"
+    interval = "30s"
     method = "GET"
     path = "/health"
     port = 8000
