@@ -1,5 +1,5 @@
 app = "rag-rbac-api"
-primary_region = "ord"
+primary_region = "iad"
 
 [build]
   dockerfile = "Dockerfile"
