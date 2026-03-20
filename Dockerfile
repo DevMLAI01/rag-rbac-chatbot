@@ -18,9 +18,10 @@ COPY . .
 RUN mkdir -p /app/data/chroma_db
 
 # Entrypoint handles first-time ingest then starts uvicorn
+# Use sed to strip Windows CRLF line endings before executing
 COPY scripts/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN sed -i 's/\r//' /entrypoint.sh && chmod +x /entrypoint.sh
 
 EXPOSE 8000
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["sh", "/entrypoint.sh"]
