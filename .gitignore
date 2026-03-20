@@ -1,0 +1,25 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Secrets
+.env
+
+# Generated data (not source)
+data/chroma_db/
+data/metrics.db
+data/raw/
+
+# Docs excluded from repo
+ARCHITECTURE.md
+DEVELOPER_GUIDE.md
+
+# IDE
+.vscode/
