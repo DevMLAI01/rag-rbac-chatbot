@@ -1,0 +1,34 @@
+# Fly.io config for the FastAPI API
+app = "rag-rbac-api"
+primary_region = "ord"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  EMBEDDING_PROVIDER = "openai"
+  CHROMA_PERSIST_DIR = "/app/data/chroma_db"
+  METRICS_DB_PATH = "/app/data/metrics.db"
+  API_PORT = "8000"
+
+[http_service]
+  internal_port = 8000
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+  [http_service.concurrency]
+    type = "requests"
+    hard_limit = 50
+    soft_limit = 25
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
+
+[[mounts]]
+  source = "rag_data"
+  destination = "/app/data"
+  initial_size = "3gb"

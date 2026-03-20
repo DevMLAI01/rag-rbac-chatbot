@@ -14,9 +14,13 @@ RUN uv sync --no-dev --frozen
 # Copy source
 COPY . .
 
-# Chroma persistence directory
+# Chroma persistence directory (overridden by Fly.io volume mount)
 RUN mkdir -p /app/data/chroma_db
+
+# Entrypoint handles first-time ingest then starts uvicorn
+COPY scripts/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 8000
 
-CMD ["uv", "run", "uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT ["/entrypoint.sh"]

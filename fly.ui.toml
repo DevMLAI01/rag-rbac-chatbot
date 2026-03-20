@@ -1,0 +1,21 @@
+# Fly.io config for the Streamlit UI
+app = "rag-rbac-ui"
+primary_region = "ord"
+
+[build]
+  dockerfile = "Dockerfile.streamlit"
+
+[env]
+  API_BASE_URL = "https://rag-rbac-api.fly.dev"
+
+[http_service]
+  internal_port = 8501
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
