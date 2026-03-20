@@ -6,6 +6,7 @@ primary_region = "iad"
 
 [env]
   EMBEDDING_PROVIDER = "openai"
+  EMBEDDING_MODEL = "text-embedding-3-small"
   CHROMA_PERSIST_DIR = "/app/data/chroma_db"
   METRICS_DB_PATH = "/app/data/metrics.db"
   API_PORT = "8000"
@@ -33,7 +34,7 @@ primary_region = "iad"
     type = "http"
 
 [[vm]]
-  memory = "256mb"
+  memory = "512mb"
   cpu_kind = "shared"
   cpus = 1
 

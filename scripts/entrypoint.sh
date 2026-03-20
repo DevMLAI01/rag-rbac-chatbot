@@ -2,18 +2,15 @@
 set -e
 
 CHROMA_DIR="${CHROMA_PERSIST_DIR:-/app/data/chroma_db}"
+SENTINEL="/app/data/.ingest_complete"
 PORT="${API_PORT:-8000}"
 
-if [ \! -d "$CHROMA_DIR" ] || [ -z "$(ls -A "$CHROMA_DIR" 2>/dev/null)" ]; then
-  echo "==> First boot: starting uvicorn in background while ingest runs..."
-  uv run uvicorn src.api.main:app --host 0.0.0.0 --port "$PORT" &
-  UVICORN_PID=$\!
-  sleep 10
+if [ \! -f "$SENTINEL" ]; then
+  echo "==> First boot: running ingest before starting server..."
   uv run python scripts/generate_data.py
   uv run python scripts/ingest.py
-  echo "==> Ingestion complete. Restarting uvicorn with fresh data..."
-  kill "$UVICORN_PID" 2>/dev/null || true
-  wait "$UVICORN_PID" 2>/dev/null || true
+  touch "$SENTINEL"
+  echo "==> Ingestion complete."
 fi
 
 exec uv run uvicorn src.api.main:app --host 0.0.0.0 --port "$PORT"
