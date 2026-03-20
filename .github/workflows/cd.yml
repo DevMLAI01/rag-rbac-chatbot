@@ -16,7 +16,7 @@ jobs:
         uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy API
-        run: flyctl deploy --config fly.toml --remote-only
+        run: flyctl deploy --config fly.toml --remote-only --wait-timeout 300
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
@@ -32,6 +32,6 @@ jobs:
         uses: superfly/flyctl-actions/setup-flyctl@master
 
       - name: Deploy Streamlit UI
-        run: flyctl deploy --config fly.ui.toml --remote-only
+        run: flyctl deploy --config fly.ui.toml --remote-only --wait-timeout 120
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}

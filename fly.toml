@@ -11,6 +11,12 @@ primary_region = "ord"
   METRICS_DB_PATH = "/app/data/metrics.db"
   API_PORT = "8000"
 
+# Runs once before each deploy on a temporary machine — generates + ingests data
+# only if Chroma is empty (idempotent)
+[deploy]
+  release_command = "sh scripts/release.sh"
+  wait_timeout = "5m"
+
 [http_service]
   internal_port = 8000
   force_https = true
@@ -22,6 +28,16 @@ primary_region = "ord"
     type = "requests"
     hard_limit = 50
     soft_limit = 25
+
+[checks]
+  [checks.alive]
+    grace_period = "30s"
+    interval = "15s"
+    method = "GET"
+    path = "/health"
+    port = 8000
+    timeout = "10s"
+    type = "http"
 
 [[vm]]
   memory = "256mb"
